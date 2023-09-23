@@ -38,7 +38,8 @@ public class OrderStreamProcessorImpl implements OrderStreamProcessor {
         List<Order> orders = new ArrayList<>();
         int counter = 0;
         String line;
-        try (InputStreamReader streamReader = new InputStreamReader(source, StandardCharsets.UTF_8); BufferedReader br = new BufferedReader(streamReader);) {
+        try (InputStreamReader streamReader = new InputStreamReader(source, StandardCharsets.UTF_8);
+             BufferedReader br = new BufferedReader(streamReader)) {
             Instant beginning = Instant.now();
             while (maxOrders > counter && maxTime.compareTo(Duration.between(beginning, Instant.now())) > 0) {
                 line = br.readLine();
