@@ -13,7 +13,6 @@ import java.util.Scanner;
 import java.util.ServiceLoader;
 import java.util.stream.Stream;
 import org.json.JSONException;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -27,10 +26,15 @@ final class OrderStreamProcessorFactoryImplTest {
     private static Stream<Arguments> testProcessInputProvider() {
         return Stream.of(
                 Arguments.of(
-                        100, Duration.ofSeconds(30), "happy-path-input.json-stream", "happy-path-output.json"));
+                        100, Duration.ofSeconds(30), "happy-path-input.json-stream", "happy-path-output.json"),
+                Arguments.of(
+                        100, Duration.ofSeconds(30), "path-statuses-input.json-stream", "path-statuses-output.json"),
+                Arguments.of(
+                        100, Duration.ofSeconds(30), "empty-input.json-stream", "empty-output.json"),
+                Arguments.of(
+                        1, Duration.ofSeconds(30), "happy-path-input.json-stream", "limited-path-output.json"));
     }
 
-    @Disabled
     @ParameterizedTest
     @MethodSource("testProcessInputProvider")
     void testProcess(

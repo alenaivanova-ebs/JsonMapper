@@ -1,6 +1,7 @@
 package tech.picnic.assignment.api;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.time.Duration;
 import java.util.Iterator;
 import java.util.ServiceLoader;
@@ -20,15 +21,15 @@ public final class StdioStreamApplication {
      * service-loaded}, sending the result to stdout.
      */
     public static void main(String[] args) throws IOException {
-        if (args.length != 2) {
-            System.err.printf("Usage:%n  java -jar application.jar <maxOrders> <maxTime>%n");
-            System.exit(1);
-        }
+//        if (args.length != 2) {
+//            System.err.printf("Usage:%n  java -jar application.jar <maxOrders> <maxTime>%n");
+//            System.exit(1);
+//        }
 
-        int maxOrders = Integer.parseInt(args[0]);
-        Duration maxTime = Duration.parse(args[1]);
-
-        processStdio(maxOrders, maxTime);
+        //int maxOrders = Integer.parseInt(args[0]);
+       // Duration maxTime = Duration.parse(args[1]);
+        Duration maxTime = Duration.ofSeconds(15);
+        processStdio(10, maxTime);
     }
 
     private static void processStdio(int maxOrders, Duration maxTime) throws IOException {
@@ -40,6 +41,9 @@ public final class StdioStreamApplication {
 
         OrderStreamProcessorFactory factory = factories.next();
         OrderStreamProcessor processor = factory.createProcessor(maxOrders, maxTime);
-        processor.process(System.in, System.out);
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        //InputStream inputStream = classloader.getResourceAsStream("alternate-path-input.json-stream");
+        InputStream inputStream = classloader.getResourceAsStream("happy-path-input.json-stream");
+        processor.process(inputStream, System.out);
     }
 }

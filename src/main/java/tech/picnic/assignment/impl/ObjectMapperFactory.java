@@ -13,7 +13,7 @@ final class ObjectMapperFactory {
     /* You may tweak the configuration of the mapper returned by this method as needed. */
     public static ObjectMapper createObjectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.getFactory().disable(JsonGenerator.Feature.AUTO_CLOSE_TARGET);
+        objectMapper.getFactory().enable(JsonGenerator.Feature.AUTO_CLOSE_TARGET);
         return objectMapper;
     }
 }
