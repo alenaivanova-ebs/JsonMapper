@@ -38,8 +38,7 @@ public class OrderStreamProcessorImpl implements OrderStreamProcessor {
         List<Order> orders = new ArrayList<>();
         int counter = 0;
         String line;
-        try (InputStreamReader streamReader = new InputStreamReader(source, StandardCharsets.UTF_8);
-             BufferedReader br = new BufferedReader(streamReader);) {
+        try (InputStreamReader streamReader = new InputStreamReader(source, StandardCharsets.UTF_8); BufferedReader br = new BufferedReader(streamReader);) {
             Instant beginning = Instant.now();
             while (maxOrders > counter && maxTime.compareTo(Duration.between(beginning, Instant.now())) > 0) {
                 line = br.readLine();
@@ -56,20 +55,21 @@ public class OrderStreamProcessorImpl implements OrderStreamProcessor {
     }
 
     private static Map<Delivery, List<Order>> filterOrders(List<Order> orders) {
-        return orders.stream()
-                .filter(p -> p.orderStatus() == Status.CANCELLED || p.orderStatus() == Status.DELIVERED)
+        return orders.stream().filter(p -> p.orderStatus() == Status.CANCELLED || p.orderStatus() == Status.DELIVERED)
                 .collect(Collectors.groupingBy((Order::delivery)));
     }
 
     private static List<DeliveryOutput> convertOrdersToDeliveries(Map<Delivery, List<Order>> filteredAndGroupedOrders) {
         List<DeliveryOutput> deliveriesOutput = new ArrayList<>();
         filteredAndGroupedOrders.forEach((key, value) -> {
-            DeliveryOutput deliveryOutputR = new DeliveryOutput(key.deliveryId()
-                    , key.deliveryTime()
-                    , getDeliveryStatus(value)
-                    , convertOrdersToOrdersOutput(value)
-                    , value.stream().filter(p -> p.orderStatus() == Status.DELIVERED && p.Amount() != null).mapToInt(Order::Amount).sum());
-            deliveriesOutput.add(deliveryOutputR);
+            DeliveryOutput deliveryOutput = DeliveryOutput.builder().deliveryId(key.deliveryId())
+                    .deliveryTime(key.deliveryTime())
+                    .deliveryStatus(getDeliveryStatus(value))
+                    .orders(convertOrdersToOrdersOutput(value))
+                    .totalAmount(value.stream().filter(p -> p.orderStatus() == Status.DELIVERED && p.Amount() != null)
+                            .mapToInt(Order::Amount).sum())
+                    .build();
+            deliveriesOutput.add(deliveryOutput);
         });
         deliveriesOutput.sort(getDeliveryComparator());
         return deliveriesOutput;
@@ -82,7 +82,10 @@ public class OrderStreamProcessorImpl implements OrderStreamProcessor {
 
     private static List<OrderOutput> convertOrdersToOrdersOutput(List<Order> orders) {
         List<OrderOutput> ordersOutput = new ArrayList<>();
-        orders.forEach(order -> ordersOutput.add(new OrderOutput(order.orderId(), order.Amount())));
+        orders.forEach(order -> ordersOutput.add(OrderOutput.builder()
+                .orderId(order.orderId())
+                .amount(order.Amount())
+                .build()));
         ordersOutput.sort(getOrderComparator());
         return ordersOutput;
     }
