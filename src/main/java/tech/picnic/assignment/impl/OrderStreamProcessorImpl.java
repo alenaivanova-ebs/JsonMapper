@@ -29,7 +29,7 @@ public class OrderStreamProcessorImpl implements OrderStreamProcessor {
     @Override
     public void process(InputStream source, OutputStream sink) throws IOException {
         List<Order> inputOrders = readInputStream(source);
-        Map<Delivery, List<Order>> filteredAndGroupedOrders = filterOrders(inputOrders);
+        Map<Delivery, List<Order>> filteredAndGroupedOrders = filterAndGroupOrders(inputOrders);
         List<DeliveryOutput> outputDeliveries = convertOrdersToDeliveries(filteredAndGroupedOrders);
         objectMapper.writeValue(sink, outputDeliveries);
     }
@@ -54,7 +54,7 @@ public class OrderStreamProcessorImpl implements OrderStreamProcessor {
         return orders;
     }
 
-    private static Map<Delivery, List<Order>> filterOrders(List<Order> orders) {
+    private static Map<Delivery, List<Order>> filterAndGroupOrders(List<Order> orders) {
         return orders.stream().filter(p -> p.orderStatus() == Status.CANCELLED || p.orderStatus() == Status.DELIVERED)
                 .collect(Collectors.groupingBy((Order::delivery)));
     }

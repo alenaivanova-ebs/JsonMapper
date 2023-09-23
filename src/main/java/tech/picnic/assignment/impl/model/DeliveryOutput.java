@@ -2,6 +2,7 @@ package tech.picnic.assignment.impl.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+
 import java.util.List;
 
 @Builder

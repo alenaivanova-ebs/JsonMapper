@@ -27,6 +27,7 @@ public final class StdioStreamApplication {
 
         int maxOrders = Integer.parseInt(args[0]);
         Duration maxTime = Duration.parse(args[1]);
+
         processStdio(maxOrders, maxTime);
     }
 
