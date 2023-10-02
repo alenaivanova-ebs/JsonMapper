@@ -1,4 +1,4 @@
-package tech.picnic.assignment.impl;
+package com.json.mapper.impl;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;

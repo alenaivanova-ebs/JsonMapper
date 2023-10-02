@@ -1,8 +1,8 @@
-package tech.picnic.assignment.impl;
+package com.json.mapper.impl;
 
-import tech.picnic.assignment.impl.model.DeliveryOutput;
-import tech.picnic.assignment.impl.model.OrderOutput;
-import tech.picnic.assignment.impl.model.Status;
+import com.json.mapper.impl.model.DeliveryOutput;
+import com.json.mapper.impl.model.OrderOutput;
+import com.json.mapper.impl.model.Status;
 
 import java.util.Comparator;
 

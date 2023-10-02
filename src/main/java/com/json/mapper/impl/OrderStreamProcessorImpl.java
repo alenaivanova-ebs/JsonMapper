@@ -1,9 +1,9 @@
-package tech.picnic.assignment.impl;
+package com.json.mapper.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import tech.picnic.assignment.api.OrderStreamProcessor;
+import com.json.mapper.api.OrderStreamProcessor;
+import com.json.mapper.impl.model.*;
 import org.apache.commons.lang3.StringUtils;
-import tech.picnic.assignment.impl.model.*;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -11,8 +11,6 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static tech.picnic.assignment.impl.Utils.*;
 
 public class OrderStreamProcessorImpl implements OrderStreamProcessor {
 
@@ -72,12 +70,12 @@ public class OrderStreamProcessorImpl implements OrderStreamProcessor {
                     .build();
             deliveriesOutput.add(deliveryOutput);
         });
-        deliveriesOutput.sort(getDeliveryComparator());
+        deliveriesOutput.sort(Utils.getDeliveryComparator());
         return deliveriesOutput;
     }
 
     private static Status getDeliveryStatus(List<Order> orders) {
-        Optional<Status> deliveryStatus = orders.stream().map(Order::orderStatus).max(getStatusComparator());
+        Optional<Status> deliveryStatus = orders.stream().map(Order::orderStatus).max(Utils.getStatusComparator());
         return deliveryStatus.orElse(null);
     }
 
@@ -87,7 +85,7 @@ public class OrderStreamProcessorImpl implements OrderStreamProcessor {
                 .orderId(order.orderId())
                 .amount(order.Amount())
                 .build()));
-        ordersOutput.sort(getOrderComparator());
+        ordersOutput.sort(Utils.getOrderComparator());
         return ordersOutput;
     }
 }

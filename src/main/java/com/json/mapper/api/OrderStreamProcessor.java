@@ -1,4 +1,4 @@
-package tech.picnic.assignment.api;
+package com.json.mapper.api;
 
 import java.io.IOException;
 import java.io.InputStream;

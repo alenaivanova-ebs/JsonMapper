@@ -1,11 +1,11 @@
-package tech.picnic.assignment.impl;
+package com.json.mapper.impl;
 
 import com.google.auto.service.AutoService;
 
 import java.time.Duration;
 
-import tech.picnic.assignment.api.OrderStreamProcessorFactory;
-import tech.picnic.assignment.api.OrderStreamProcessor;
+import com.json.mapper.api.OrderStreamProcessor;
+import com.json.mapper.api.OrderStreamProcessorFactory;
 
 @AutoService(OrderStreamProcessorFactory.class)
 public final class OrderStreamProcessorFactoryImpl implements OrderStreamProcessorFactory {

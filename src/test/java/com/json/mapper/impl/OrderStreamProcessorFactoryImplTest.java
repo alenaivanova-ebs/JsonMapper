@@ -1,4 +1,4 @@
-package tech.picnic.assignment.impl;
+package com.json.mapper.impl;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -12,6 +12,9 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.ServiceLoader;
 import java.util.stream.Stream;
+
+import com.json.mapper.api.OrderStreamProcessor;
+import com.json.mapper.api.OrderStreamProcessorFactory;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,8 +22,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
-import tech.picnic.assignment.api.OrderStreamProcessor;
-import tech.picnic.assignment.api.OrderStreamProcessorFactory;
 
 final class OrderStreamProcessorFactoryImplTest {
     private static Stream<Arguments> testProcessInputProvider() {

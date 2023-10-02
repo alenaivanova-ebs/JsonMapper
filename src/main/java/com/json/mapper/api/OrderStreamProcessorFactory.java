@@ -1,4 +1,4 @@
-package tech.picnic.assignment.api;
+package com.json.mapper.api;
 
 import java.time.Duration;
 
