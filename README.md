@@ -7,9 +7,12 @@ Input:
 
 Output:
 
+
 Orders should be grouped by delievery
 
+
 Add total_amount for the delivery
+
 
 [
   {
